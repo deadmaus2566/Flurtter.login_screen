@@ -31,26 +31,25 @@ class _InputTextState extends State<InputText> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(20.0)),
       child: TextFormField(
         keyboardType: widget.keyboard,
         obscureText: widget.obscureText!,
         onChanged: widget.onChangued,
         validator: widget.validator,
         decoration: InputDecoration(
-          suffixIcon: widget.icon,
           labelText: widget.label,
-          hintText: widget.hint,
-          hintStyle: TextStyle(
+          labelStyle: TextStyle(
+            height: 1,
+            fontSize: 20,
             color: Colors.black54,
             fontFamily: GoogleFonts.acme(
               fontSize: 20.0,
             ).fontFamily,
           ),
-          labelStyle: TextStyle(
-            height: -0.4,
+          hintText: widget.hint,
+          hintStyle: TextStyle(
             color: Colors.black54,
             fontFamily: GoogleFonts.acme(
               fontSize: 20.0,
@@ -59,6 +58,7 @@ class _InputTextState extends State<InputText> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
+          suffixIcon: widget.icon,
         ),
       ),
     );
