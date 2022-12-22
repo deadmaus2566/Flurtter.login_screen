@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loggin_screen/widgets/input_text.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class LogoutForm extends StatefulWidget {
+  const LogoutForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<LogoutForm> createState() => _LogoutFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LogoutFormState extends State<LogoutForm> {
   GlobalKey<FormState> _formKey = GlobalKey();
 
+  String _name = "";
   String _email = '';
   String _password = '';
 
   Function? _submit() {
-    final islogin = _formKey.currentState!.validate();
-    print('islogin: $islogin');
+    final islogout = _formKey.currentState!.validate();
+    print('islogin: $islogout');
   }
 
   @override
@@ -26,6 +27,24 @@ class _LoginFormState extends State<LoginForm> {
         key: _formKey,
         child: Column(
           children: [
+            InputText(
+              label: 'Name',
+              hint: 'Ingrese su nombre',
+              icon: Icon(Icons.person),
+              keyboard: TextInputType.name,
+              onChangued: (data) {
+                _name = data;
+              },
+              validator: (data) {
+                if (data!.isEmpty || !data.contains('@')) {
+                  return 'Name Invalido';
+                }
+                return null;
+              },
+            ),
+            Divider(
+              height: 20.0,
+            ),
             InputText(
               label: 'Email',
               hint: 'Ingrese su email',
@@ -66,7 +85,7 @@ class _LoginFormState extends State<LoginForm> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xff1e88e5)),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
                   textStyle: MaterialStateProperty.all(TextStyle(
                     fontSize: 30.0,
                     fontFamily: GoogleFonts.acme().fontFamily,
@@ -74,34 +93,9 @@ class _LoginFormState extends State<LoginForm> {
                   fixedSize: MaterialStateProperty.all(Size(100.0, 50.0)),
                 ),
                 onPressed: _submit,
-                child: Text('Login'),
+                child: Text('Sing Up'),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '¿No tienes cuenta?',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: GoogleFonts.acme().fontFamily,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'Sing_Up');
-                  },
-                  child: Text(
-                    'Registrate',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 20.0,
-                      fontFamily: GoogleFonts.acme().fontFamily,
-                    ),
-                  ),
-                ),
-              ],
-            )
           ],
         ));
   }

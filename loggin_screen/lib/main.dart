@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(title: 'Tarea Login', initialRoute: 'Home', routes: {
       'Home': (context) => RegistrarUsuario(),
-      'SingUp': (context) => SingUp(),
-      'SingIn': (context) => SingIn(),
+      'Sing_Up': (context) => SingUp(),
+      'Sing_In': (context) => SingIn(),
     });
   }
 }
