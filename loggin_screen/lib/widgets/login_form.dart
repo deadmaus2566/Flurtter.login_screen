@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loggin_screen/pages/home_screen.dart';
+import 'package:loggin_screen/pages/singin.dart';
 import 'package:loggin_screen/widgets/input_text.dart';
 
 class LoginForm extends StatefulWidget {
@@ -17,7 +20,12 @@ class _LoginFormState extends State<LoginForm> {
 
   Function? _submit() {
     final islogin = _formKey.currentState!.validate();
-    print('islogin: $islogin');
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: _email, password: _password)
+        .then((value) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Home_Screen()));
+    });
   }
 
   @override
@@ -89,7 +97,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'Sing_Up');
+                    Navigator.pushNamed(context, '/Sing_Up');
                   },
                   child: Text(
                     'Registrate',

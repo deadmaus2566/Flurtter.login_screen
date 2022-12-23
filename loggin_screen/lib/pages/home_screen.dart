@@ -1,17 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loggin_screen/pages/singin.dart';
 import 'package:loggin_screen/widgets/icon_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loggin_screen/widgets/login_form.dart';
 
-class SingIn extends StatefulWidget {
-  const SingIn({super.key});
+class Home_Screen extends StatefulWidget {
+  const Home_Screen({super.key});
 
   @override
-  State<SingIn> createState() => _SingInState();
+  State<Home_Screen> createState() => _Home_ScreenState();
 }
 
-class _SingInState extends State<SingIn> {
+class _Home_ScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +38,7 @@ class _SingInState extends State<SingIn> {
                     url: 'assets/logo.png',
                   ),
                   Text(
-                    'Iniciar Sesión',
+                    'Home',
                     style: GoogleFonts.calligraffitti(
                       fontSize: 38.0,
                       color: Colors.white,
@@ -46,7 +49,30 @@ class _SingInState extends State<SingIn> {
                     color: Colors.black,
                   ),
                   //Formulario
-                  LoginForm(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Color(0xff1e88e5)),
+                        textStyle: MaterialStateProperty.all(TextStyle(
+                          fontSize: 30.0,
+                          fontFamily: GoogleFonts.acme().fontFamily,
+                        )),
+                        fixedSize: MaterialStateProperty.all(Size(100.0, 50.0)),
+                      ),
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut().then((value) {
+                          print('Signed Out');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SingIn()));
+                        });
+                      },
+                      child: Text('Logout'),
+                    ),
+                  ),
                 ],
               ),
             ],

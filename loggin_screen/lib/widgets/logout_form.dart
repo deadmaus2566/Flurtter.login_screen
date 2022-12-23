@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loggin_screen/pages/home_screen.dart';
 import 'package:loggin_screen/widgets/input_text.dart';
 
 class LogoutForm extends StatefulWidget {
@@ -18,7 +21,15 @@ class _LogoutFormState extends State<LogoutForm> {
 
   Function? _submit() {
     final islogout = _formKey.currentState!.validate();
-    print('islogin: $islogout');
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: _email, password: _password)
+        .then((value) {
+      print('Create Acount');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Home_Screen()));
+    }).onError((error, stackTrace) {
+      print('Error ${error.toString()}');
+    });
   }
 
   @override
@@ -36,7 +47,7 @@ class _LogoutFormState extends State<LogoutForm> {
                 _name = data;
               },
               validator: (data) {
-                if (data!.isEmpty || !data.contains('@')) {
+                if (data!.isEmpty) {
                   return 'Name Invalido';
                 }
                 return null;
