@@ -19,13 +19,19 @@ class _LoginFormState extends State<LoginForm> {
   String _password = '';
 
   Function? _submit() {
-    final islogin = _formKey.currentState!.validate();
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: _email, password: _password)
-        .then((value) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Home_Screen()));
-    });
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Procesando datos'),
+      ));
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email, password: _password)
+          .then((value) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home_Screen()));
+      }).onError((error, stackTrace) {
+        print('Error ${error.toString()}');
+      });
+    }
   }
 
   @override

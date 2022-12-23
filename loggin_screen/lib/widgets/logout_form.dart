@@ -15,21 +15,24 @@ class LogoutForm extends StatefulWidget {
 class _LogoutFormState extends State<LogoutForm> {
   GlobalKey<FormState> _formKey = GlobalKey();
 
-  String _name = "";
+  String _name = '';
   String _email = '';
   String _password = '';
 
   Function? _submit() {
-    final islogout = _formKey.currentState!.validate();
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: _email, password: _password)
-        .then((value) {
-      print('Create Acount');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Home_Screen()));
-    }).onError((error, stackTrace) {
-      print('Error ${error.toString()}');
-    });
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Procesando datos'),
+      ));
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: _email, password: _password)
+          .then((value) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home_Screen()));
+      }).onError((error, stackTrace) {
+        print('Error ${error.toString()}');
+      });
+    }
   }
 
   @override
